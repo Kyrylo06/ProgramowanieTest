@@ -1,0 +1,54 @@
+body {
+    font-family: Calibri, sans-serif;
+    font-size: 18px;
+    color: darkblue;
+}
+
+/* Заголовок */
+.header {
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Блок с текстом */
+.box {
+    width: 600px;
+    height: 200px;
+    overflow: auto;
+    text-align: justify;
+    background-color: transparent;
+    border: 1px solid black;
+    margin: 20px auto;
+}
+
+/* Ссылка без изменений при наведении */
+a,
+a:visited,
+a:hover,
+a:active {
+    color: blue;
+    text-decoration: none;
+}
+
+/* Таблица */
+table {
+    margin-left: 55%;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+/* Цветной текст */
+.color-text {
+    color: darkred;
+    text-align: center;
+}
+
+/* Список */
+ul {
+    list-style-type: circle;
+}
