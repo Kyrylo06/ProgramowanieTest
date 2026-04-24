@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Ćwiczenie 8</title>
+</head>
+<body>
+
+<h3>Zadanie 1</h3>
+
+Imię: <input id="imie"><br><br>
+Nazwisko: <input id="nazwisko"><br><br>
+Wiek: <input id="wiek" type="number"><br><br>
+
+<button onclick="zapisz()">Wyślij</button>
+
+<p id="wynik1"></p>
+
+<hr>
+
+<h3>Zadania 2-8</h3>
+<button onclick="start()">Uruchom</button>
+
+<pre id="wynik2"></pre>
+
+<script>
+// ===== ZADANIE 1 =====
+function zapisz() {
+    var osoba = {
+        imie: document.getElementById("imie").value,
+        nazwisko: document.getElementById("nazwisko").value,
+        wiek: document.getElementById("wiek").value
+    };
+
+    // JSON
+    var json = JSON.stringify(osoba);
+
+    document.getElementById("wynik1").innerHTML =
+        "Imię: " + osoba.imie + "<br>" +
+        "Nazwisko: " + osoba.nazwisko + "<br>" +
+        "Wiek: " + osoba.wiek + "<br>" +
+        "JSON: " + json;
+}
+
+// ===== ZADANIE 2 =====
+class ComplexNumber {
+    constructor(r, i) {
+        this.real = r;
+        this.imaginary = i;
+    }
+
+    wypisz() {
+        return this.real + " + " + this.imaginary + "i";
+    }
+
+    module() {
+        return Math.sqrt(this.real * this.real + this.imaginary * this.imaginary);
+    }
+}
+
+// ===== ZADANIE 3 =====
+function generuj(n) {
+    var tab = [];
+
+    for (var i = 0; i < n; i++) {
+        var r = Math.floor(Math.random() * 10);
+        var im = Math.floor(Math.random() * 10);
+        tab.push(new ComplexNumber(r, im));
+    }
+
+    return tab;
+}
+
+// ===== ZADANIA 4-8 =====
+function start() {
+    var dane = generuj(5);
+    var tekst = "";
+
+    tekst += "Dane:\n";
+    dane.forEach(x => tekst += x.wypisz() + "\n");
+
+    // 4 filter
+    var dodatnie = dane.filter(x => x.real > 0 && x.imaginary > 0);
+    tekst += "\nTylko dodatnie:\n";
+    dodatnie.forEach(x => tekst += x.wypisz() + "\n");
+
+    // 5 map
+    var zamienione = dane.map(x => new ComplexNumber(x.imaginary, x.real));
+    tekst += "\nZamienione:\n";
+    zamienione.forEach(x => tekst += x.wypisz() + "\n");
+
+    // 6 reduce suma
+    var suma = dane.reduce((a, x) => a + x.module(), 0);
+    tekst += "\nSuma modułów: " + suma + "\n";
+
+    // 7 min
+    var min = dane[0];
+    dane.forEach(x => {
+        if (x.module() < min.module()) min = x;
+    });
+    tekst += "Min moduł: " + min.wypisz() + "\n";
+
+    // 8 max
+    var max = dane[0];
+    dane.forEach(x => {
+        if (x.module() > max.module()) max = x;
+    });
+    tekst += "Max moduł: " + max.wypisz() + "\n";
+
+    document.getElementById("wynik2").textContent = tekst;
+}
+</script>
+
+</body>
+</html>
