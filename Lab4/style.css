@@ -1,0 +1,85 @@
+/* Общие настройки */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Верхняя панель */
+#top_bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 5%;
+    box-sizing: border-box;
+}
+
+/* Лого */
+#logo_div {
+    text-align: center;
+}
+
+/* Навигация */
+#nav_container {
+    display: flex;
+    gap: 20px;
+}
+
+.nav_item {
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.nav_item:hover {
+    background-color: #555;
+}
+
+/* Центральный блок */
+#content_container {
+    width: 60%;
+    margin: 100px auto 50px auto; /* отступ сверху из-за fixed */
+    text-align: left;
+}
+
+/* Списки */
+.first_list li {
+    color: darkblue;
+}
+
+.second_list li {
+    color: darkred;
+}
+
+/* Комбинаторы (пример) */
+.first_list li:first-child {
+    font-weight: bold;
+}
+
+.second_list > li {
+    font-style: italic;
+}
+
+/* Контентный текст */
+#content_container div {
+    margin-top: 20px;
+    text-align: justify;
+}
+
+/* Подвал */
+#footer {
+    width: 100%;
+    background-color: #333;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 50px;
+}
