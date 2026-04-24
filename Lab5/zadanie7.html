@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+function naHex(liczba) {
+    let znaki = "0123456789ABCDEF";
+    let wynik = "";
+
+    while (liczba > 0) {
+        let reszta = liczba % 16;
+        wynik = znaki[reszta] + wynik;
+        liczba = Math.floor(liczba / 16);
+    }
+
+    console.log(wynik);
+}
+
+naHex(255);
+</script>
+
+</body>
+</html>

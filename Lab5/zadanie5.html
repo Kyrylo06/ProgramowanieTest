@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+function obliczPi(n) {
+    let suma = 0;
+
+    for (let i = 0; i < n; i++) {
+        let znak = (i % 2 === 0) ? 1 : -1;
+        suma += znak * (1 / (2 * i + 1));
+    }
+
+    let wynik = 4 * suma;
+    console.log(wynik);
+}
+
+obliczPi(1000);
+</script>
+
+</body>
+</html>
