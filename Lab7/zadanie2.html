@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<h2>Formularz rejestracji</h2>
+
+<form id="form">
+    <input type="text" id="login" placeholder="Nazwa użytkownika"><br><br>
+    <input type="text" id="email" placeholder="E-mail"><br><br>
+    <input type="password" id="haslo" placeholder="Hasło"><br><br>
+    <input type="password" id="haslo2" placeholder="Powtórz hasło"><br><br>
+    <input type="date" id="data"><br><br>
+
+    <select id="plec">
+        <option value="">Wybierz płeć</option>
+        <option>Mężczyzna</option>
+        <option>Kobieta</option>
+        <option>Nie chcę podawać</option>
+    </select><br><br>
+
+    <input type="checkbox" id="reg"> Akceptuję regulamin<br><br>
+
+    <input type="radio" name="wersja" value="Wersja darmowa"> Wersja darmowa<br>
+    <input type="radio" name="wersja" value="Wersja standardowa"> Wersja standardowa<br>
+    <input type="radio" name="wersja" value="Wersja premium"> Wersja premium<br><br>
+
+    <button type="button" onclick="sprawdz()">Zarejestruj się</button>
+    <button type="reset">Wyczyść</button>
+</form>
+
+<p id="wynik"></p>
+
+<script>
+function sprawdz() {
+    const login = document.getElementById("login").value;
+    const email = document.getElementById("email").value;
+    const haslo = document.getElementById("haslo").value;
+    const haslo2 = document.getElementById("haslo2").value;
+    const data = document.getElementById("data").value;
+    const plec = document.getElementById("plec").value;
+    const reg = document.getElementById("reg").checked;
+    const wynik = document.getElementById("wynik");
+
+    const wersje = document.getElementsByName("wersja");
+    let wybranaWersja = "";
+    for (let w of wersje) {
+        if (w.checked) wybranaWersja = w.value;
+    }
+
+    try {
+        if (!login || !email || !haslo || !haslo2 || !data || !plec || !wybranaWersja) {
+            throw "Wypełnij wszystkie pola!";
+        }
+
+        if (!/^[a-zA-Z0-9]+$/.test(login)) {
+            throw "Login tylko litery i cyfry!";
+        }
+
+        if (haslo.length < 8 || !/\d/.test(haslo)) {
+            throw "Hasło min. 8 znaków i 1 cyfra!";
+        }
+
+        if (haslo !== haslo2) {
+            throw "Hasła nie są takie same!";
+        }
+
+        if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+            throw "Niepoprawny e-mail!";
+        }
+
+        const birth = new Date(data);
+        const today = new Date();
+        const age = today.getFullYear() - birth.getFullYear();
+
+        if (age < 18) {
+            throw "Musisz mieć 18 lat!";
+        }
+
+        if (!reg) {
+            throw "Musisz zaakceptować regulamin!";
+        }
+
+        const formattedDate =
+            birth.getDate().toString().padStart(2, '0') + "." +
+            (birth.getMonth() + 1).toString().padStart(2, '0') + "." +
+            birth.getFullYear();
+
+        const maskedPassword = "*".repeat(haslo.length);
+
+        wynik.innerHTML = `
+        Nazwa użytkownika: ${login}<br>
+        Hasło: ${maskedPassword}<br>
+        Adres e-mail: ${email}<br>
+        Data urodzenia: ${formattedDate}<br>
+        Płeć: ${plec}<br>
+        Wybrana wersja: ${wybranaWersja}
+        `;
+
+    } catch (e) {
+        wynik.textContent = "Błąd: " + e;
+    }
+}
+</script>
+
+</body>
+</html>
