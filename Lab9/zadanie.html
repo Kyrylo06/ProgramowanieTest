@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Clicker</title>
+</head>
+<body>
+
+<h2>Prosta gra Clicker</h2>
+
+<p>Punkty: <span id="punkty">0</span></p>
+
+<button onclick="klik()">KLIKNIJ</button>
+
+<h3>Ulepszenia</h3>
+
+<button onclick="kupKlik()">Lepszy klik (koszt: <span id="kosztKlik">10</span>)</button><br><br>
+<button onclick="kupAuto()">Auto punkty (koszt: <span id="kosztAuto">20</span>)</button>
+
+<script>
+var punkty = 0;
+var sila = 1;
+var auto = 0;
+
+var kosztKlik = 10;
+var kosztAuto = 20;
+
+// ===== WCZYTANIE =====
+function wczytaj() {
+    if (localStorage.getItem("gra")) {
+        var dane = JSON.parse(localStorage.getItem("gra"));
+
+        punkty = dane.punkty;
+        sila = dane.sila;
+        auto = dane.auto;
+        kosztKlik = dane.kosztKlik;
+        kosztAuto = dane.kosztAuto;
+
+        // offline zarabianie
+        var teraz = Date.now();
+        var roznica = Math.floor((teraz - dane.czas) / 1000);
+        punkty += roznica * auto;
+    }
+}
+
+// ===== ZAPIS =====
+function zapisz() {
+    localStorage.setItem("gra", JSON.stringify({
+        punkty: punkty,
+        sila: sila,
+        auto: auto,
+        kosztKlik: kosztKlik,
+        kosztAuto: kosztAuto,
+        czas: Date.now()
+    }));
+}
+
+// ===== AKTUALIZACJA =====
+function pokaz() {
+    document.getElementById("punkty").textContent = Math.floor(punkty);
+    document.getElementById("kosztKlik").textContent = kosztKlik;
+    document.getElementById("kosztAuto").textContent = kosztAuto;
+}
+
+// ===== KLIK =====
+function klik() {
+    punkty += sila;
+    pokaz();
+    zapisz();
+}
+
+// ===== ULEPSZENIA =====
+function kupKlik() {
+    if (punkty >= kosztKlik) {
+        punkty -= kosztKlik;
+        sila++;
+        kosztKlik = Math.floor(kosztKlik * 1.5);
+        pokaz();
+        zapisz();
+    }
+}
+
+function kupAuto() {
+    if (punkty >= kosztAuto) {
+        punkty -= kosztAuto;
+        auto++;
+        kosztAuto = Math.floor(kosztAuto * 1.5);
+        pokaz();
+        zapisz();
+    }
+}
+
+// ===== AUTO DOCHÓD =====
+setInterval(function() {
+    punkty += auto;
+    pokaz();
+    zapisz();
+}, 1000);
+
+// старт
+wczytaj();
+pokaz();
+</script>
+
+</body>
+</html>
